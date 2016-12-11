@@ -1,5 +1,5 @@
 # reinforcement-learning
-The repository contains my solutions to practical sessions (aka TP in French) of Reinforcement Learning.
+The repository contains my solutions including code and report to practical sessions (aka TP in French) of Reinforcement Learning.
 
 The course material can be found at http://researchers.lille.inria.fr/~lazaric/Webpage/MVA-RL_Course16.html
 
