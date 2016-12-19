@@ -6,7 +6,7 @@ G = [2, -1; 0, 1];
 
 [ActionsA, ActionsB, Rew] = EXP3vEXP3(n, eta, beta, G);
 
-%{
+
 % Compute the average number of choosing action 1 for AnbOnesA = zeros(n, 1);
 if ActionsA(1) == 1
     nbOnesA(1) = 1;
@@ -45,8 +45,8 @@ title('Convergence of average number of choosing action 1')
 xlabel('Time series')
 ylabel('Average number of choosing action 1')
 legend('A', 'B', 'Location', 'southeast')
-%}
 
+% Compute the average reward for A
 avgRew = cumsum(Rew);
 for i = 1 : n
     avgRew(i) /= i;
