@@ -1,12 +1,12 @@
-function [rew, draws] = TS_adaptation(T, MAB)
-    rew = zeros(T, 1);
-    draws = zeros(T, 1);
+function [rew, draws] = TS_adaptation(R, MAB)
+    rew = zeros(R, 1);
+    draws = zeros(R, 1);
     nbArms = length(MAB);
     
     N = zeros(nbArms, 1);
     S = zeros(nbArms, 1);
     
-    for t = 1 : T
+    for r = 1 : R
         arm_best = 1;
         value_best = armBeta(S(arm_best) + 1, N(arm_best) - S(arm_best) + 1).sample();
         for arm = 2 : nbArms
@@ -17,10 +17,10 @@ function [rew, draws] = TS_adaptation(T, MAB)
             end
         end
         
-        draws(t) = arm_best;
-        rew_temp = MAB{arm_best}.sample();
-        rew(t) = armBernoulli(rew_temp).sample();
+        draws(r) = arm_best;
+        rew(r) = MAB{arm_best}.sample();
+        rew_update = armBernoulli(rew(r)).sample();
         N(arm_best) += 1;
-        S(arm_best) += rew(t);
+        S(arm_best) += rew_update;
     end
 end
