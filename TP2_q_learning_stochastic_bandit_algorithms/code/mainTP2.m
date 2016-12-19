@@ -42,7 +42,6 @@ T_max = 1000; % 1000
 [pi_N, r_N] = q_learning(N, T_max, epsilon, gamma, max_height, A, sick_prob, growth, maintenance_cost, planting_cost, sell_price);
 
 % Performance in the initial state
-%{
 V_diff_N = zeros(N, 1);
 V_opt = bellman_value(pi_N(N, :), gamma, max_height, A, sick_prob, growth, maintenance_cost, planting_cost, sell_price)(1);
 for n = 1 : N
@@ -50,10 +49,9 @@ for n = 1 : N
     V_diff_N(n) = abs(V_opt - V_n);
 end
 plot(1 : N, V_diff_N)
-%}
+
 
 % Performance over all the other states
-%{
 V_diff_all_N = zeros(N, 1);
 V_opt_S = bellman_value(pi_N(N, :), gamma, max_height, A, sick_prob, growth, maintenance_cost, planting_cost, sell_price);
 for n = 1 : N
@@ -67,19 +65,18 @@ for n = 1 : N
     end
 end
 plot(1 : N, V_diff_all_N)
-%}
+
 
 % plot(1 : N, r_N)
 
 %% Build your own bandit problem 
 
 % this is an example, please change the parameters or arms!
-%{
 Arm1 = armBernoulli(0.3);
 Arm2 = armBernoulli(0.25);
 Arm3 = armBernoulli(0.2);
 Arm4 = armBernoulli(0.1);
-%}
+
 
 %{
 Arm1 = armBernoulli(0.6);
@@ -113,7 +110,7 @@ for t = 1 : T
     rangeT(t) = t;
 end
 
-%{
+% Regret of one run
 [rew1, draws1] = UCB1(T, MAB);
 reg1 = muMax * rangeT - cumsum(rew1);
 [rew2, draws2] = TS(T, MAB);
@@ -124,11 +121,10 @@ title('Regret of one run - Bernoulli bandit models')
 xlabel('Time series')
 ylabel('Regret')
 legend('UCB1', 'TS', 'Location', 'southeast')
-%}
+
 
 %% (Expected) regret curve for UCB and Thompson Sampling
-
-%{
+% Bernoulli bandits
 C = 0;
 for i = 1 : NbArms
     if Means(i) < muMax
@@ -157,15 +153,12 @@ title('Expectation of regret - Bernoulli bandit models')
 xlabel('Time series')
 ylabel('Regret')
 legend('UCB1', 'TS', 'Lai and Robbins lower bound', 'Location', 'southeast')
-%}
 
 %% Non-parametric bandits (bounded rewards)
-%{
 Arm5 = armExp(0.3);
 Arm6 = armExp(0.25);
 Arm7 = armExp(0.2);
 Arm8 = armExp(0.1);
-%}
 
 %{
 Arm5 = armExp(0.6);
@@ -185,7 +178,7 @@ end
 
 muMax2 = max(Means2);
 
-%{
+% Regret of one run for non-parametric bandits
 [rew3, draws3] = UCB1(T, MAB2);
 reg3 = muMax2 * rangeT - cumsum(rew3);
 [rew4, draws4] = TS_adaptation(T, MAB2);
@@ -196,9 +189,9 @@ title('Regret of one run - Non-parametric bandits - Exponential bandit models')
 xlabel('Time series')
 ylabel('Regret')
 legend('UCB1', 'Adaptation of TS for non-binary rewards', 'Location', 'southeast')
-%}
 
-%{
+
+% Expectation of the regret for non-parametric bandits
 C2 = 0;
 for i = 1 : NbArms2
     if Means2(i) < muMax2
@@ -229,4 +222,3 @@ title('Expectation of regret - Non-parametric bandits - Exponential bandit model
 xlabel('Time series')
 ylabel('Regret')
 legend('UCB1', 'Adaptation of TS for non-binary rewards', 'Lai and Robbins lower bound', 'Location', 'southeast')
-%}
