@@ -27,7 +27,7 @@ policy3(n_energy, n_nosugar)
 [reward] = draw_arm(T, V, s);
 reward
 
-%{
+%% Compare one parametrized strategy with the baselines
 R = 500; # nb of restocks to estimate the expectation
 tot_rewards1 = simulation(policy1, R);
 tot_rewards2 = simulation(policy2, R);
@@ -37,10 +37,9 @@ title('Expectation of total reward collected before restock')
 xlabel('Time series')
 ylabel('Reward')
 legend('discount', 'no discount', 'T = [2, 5, 10], V = [0.1, 0.2, 0.5]', 'Location', 'southeast')
-%}
+
 
 %% Choose a bandit problem
-
 nArms = 4;
 TableT = [[2, 5, 10]; [3, 6, 9]; [1, 3, 5]; [1, 5, 7]];
 TableV = [[0.1, 0.2, 0.5]; [0.1, 0.2, 0.3]; [0.2, 0.3, 0.4]; [0.2, 0.5, 0.9]];
@@ -51,8 +50,7 @@ for iArm = 1 : nArms
 end
 
 
-%{
-%% Finding the best arm
+%% Find the best arm
 R = 500; # nb of restocks
 policy3 = @(n1,n2) soda_strategy_param(n1, n2, T, V);
 policy4 = @(n1,n2) soda_strategy_param(n1, n2, TableT(2, :), TableV(2, :));
@@ -67,9 +65,9 @@ title('Expectation of total reward collected before restock')
 xlabel('Time series')
 ylabel('Reward')
 legend('T = [2, 5, 10], V = [0.1, 0.2, 0.5]', 'T = [3, 6, 9], V = [0.1, 0.2, 0.3]', 'T = [1, 3, 5], V = [0.2, 0.3, 0.4]', 'T = [1, 5, 7], V = [0.2, 0.5, 0.9]', 'Location', 'southeast')
-%}
 
-%% Comparing differnt MAB algorithms
+
+%% Compare differnt MAB algorithms
 R = 1000; # nb of restocks
 eta = 0.01;
 beta = 0.01;
